@@ -1,20 +1,34 @@
-Introduction
-The script run_analysis.R performs the 5 steps described in the course project.
+CODEBOOK FOR THE COURSE PROJECT.
+COURSE- GETTING AND CLEANING DATA
 
-First, all the similar data is merged using the rbind() function [same number of variables]
+ALL THE DATA WAS READ USING read.table FUNCTION. 
 
-Then, only those columns with the mean and standard deviation measures are taken from the whole dataset. After extracting these columns, they are given the correct names, taken from features.txt.
-As activity data is addressed with values 1:6, we take the activity names and IDs from activity_labels.txt and they are substituted in the dataset.
+VARIABLES (as per their assignment in the programme)
 
-On the whole dataset, those columns with vague column names are corrected.
+1) xtrain                   table   base table from file train/x_train.txt
+2) ytrain                   table   base table from file train/y_train.txt
+3) subjecttrain             table   base table from file train/subject_train.txt
+4) train                    table   created using cbind function. THE MAIN TRAINING SET.
 
-We generate a new dataset with all the average measures for each subject and activity type (30 subjects * 6 activities = 180 rows). The output file is called Solutiondata.txt, and uploaded to this repository.
-Variables
-x_train, y_train, x_test, y_test, subject_train and subject_test contain the data from the downloaded files.
-x_data, y_data and subject_data merge the previous datasets
+5) xtest                    table   base table from file test/x_test.txt
+6) xtest                    table   base table from file test/y_test.txt
+7) subjecttest              table   base table from file test/subject_test.txt
+8) test                     table   created using cbind function. THE MAIN TEST SET.
 
-features contains the correct names for the x_data dataset, which are applied to the column names stored in mean_and_std_features, a numeric vector used to extract the desired data.
-This same approach is taken with activity names through the activities variable.
-comp merges x_data, y_data and subject_data in a big dataset.
+9) mainset                  table   created using rbind fuction. THE TRAIN+TEST SETS MERGED TO FORM mainset.
+10)variablenamestable       table   read from features.txt file. Contains all the variable names.
+11)variablenames            vector  character vector. It is the second column of the variablenamestable which actually contains all the variablenames.
 
-Finally, Solutiondata contains the relevant averages which will be later stored in a .txt file. ddply() from the plyr package is used to apply colMeans() and ease the development.
+VARIABLENAMES CHANGED AND MADE DESCRIPTIVE USING SUB FUNCTION.
+
+12)indicescolumnsrequired   vector  integer vector. Contains indices of the variablenames which contain mean or standard deviation measures. (names having the string mean or std in them)
+13)datasetrequired          table   dataset with ONLY the names of required variables. Extracted from the mainset but only columns whose indices are in the indicescolumnsrequired
+                                    This ensures that the datasetrequired contains only the mean measures and the standard deviation measures.
+                                    
+14)activitylabelstable      table   base table from activity_labels.txt file. Contains the activity names such as STANDING, WALKING, LAYING etc.
+15)activitylabes            vector  character vector. The second column of the activitylabelstable. It actually contains all the acctivity names such as STANDING, WALKING, LAYING etc.
+
+DATASET GROUPED USING Student and Activity columns.
+
+16)solutiontable            table   the final dataset grouped by Student ---- Activity ------ Average/Mean data.
+17)solutionfile.txt         file    a text file (.txt) which contains all the data from solutiontable in raw text. (Just like the one which was provided to us in the beginning of this assignment (but a lot less messy and lot more informative :p))
